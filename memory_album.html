@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>回憶相冊</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0e7db;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #ff6f61;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .album {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .album img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+        }
+        .album img:hover {
+            transform: scale(1.1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .back-link {
+            margin-top: 20px;
+            color: #ff4b5c;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>回憶相册 📸</h1>
+    <div class="album">
+        <img src="memory1.jpg" alt="回憶1">
+        <img src="memory2.jpg" alt="回憶2">
+        <img src="memory3.jpg" alt="回憶3">
+        <img src="memory4.jpg" alt="回憶4">
+    </div>
+    
+    <!-- 返回主页面的链接 -->
+    <a href="index.html" class="back-link">返回首頁</a>
+</body>
+</html>
