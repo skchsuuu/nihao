@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快樂！</title>
+    <style>
+        /* 背景动画 */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #ff9a76, #ff6f61, #feca57, #1dd1a1, #54a0ff);
+            background-size: 400% 400%;
+            animation: gradientBackground 10s ease infinite;
+        }
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 标题动画 */
+        h1 {
+            color: #ff4b5c;
+            font-size: 3em;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ff6f61, 0 0 20px #ff6f61, 0 0 30px #ff6f61; }
+            to { text-shadow: 0 0 20px #ff9a76, 0 0 30px #feca57, 0 0 40px #1dd1a1; }
+        }
+
+        /* 祝福文字动画 */
+        .message {
+            font-size: 1.5em;
+            color: #fff;
+            margin: 20px;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* 图片动画 */
+        img {
+            width: 300px;
+            border-radius: 15px;
+            margin-top: 20px;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* 烟花Canvas */
+        .fireworks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* 签名样式 */
+        .signature {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #fff;
+            opacity: 0.8;
+            animation: fadeIn 2s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <h1>生日快樂，余佳潣！</h1>
+    <div class="message">
+        <p>願你在這特別的日子——11月7日，收穫滿滿的愛與快樂，生日快樂！🎉🎂</p>
+    </div>
+  <img src="birthday_image.png" alt="生日图片">
+
+    <!-- 背景音乐 -->
+    <audio controls autoplay loop>
+        <source src="birthday_song.mp3" type="audio/mpeg">
+        您的瀏覽器不支援音訊播放。
+    </audio>
+
+    <div class="signature">由香格里拉太子發出</div>
+    
+    <!-- 链接到子页面 -->
+    <div style="margin-top: 20px;">
+        <a href="memory_album.html" style="color: #ff4b5c; font-size: 1.2em; text-decoration: none;">查看回憶相冊 📸</a>
+    </div>
+    
+    <canvas class="fireworks"></canvas>
+
+    <script>
+        // 烟花特效的 JavaScript 代码
+        (function() {
+            const canvas = document.querySelector('.fireworks');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+
+            function createParticle(x, y) {
+                const colors = ['#ff4b5c', '#ff9a76', '#feca57', '#1dd1a1', '#54a0ff'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particles.push({
+                    x,
+                    y,
+                    dx: Math.random() * 4 - 2,
+                    dy: Math.random() * 4 - 2,
+                    life: Math.random() * 30 + 50,
+                    color
+                });
+            }
+
+            function updateParticles() {
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    p.x += p.dx;
+                    p.y += p.dy;
+                    p.life--;
+                    if (p.life <= 0) {
+                        particles.splice(i, 1);
+                    }
+                }
+            }
+
+            function drawParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.fill();
+                });
+            }
+
+            function animate() {
+                updateParticles();
+                drawParticles();
+                requestAnimationFrame(animate);
+            }
+
+            setInterval(() => {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                for (let i = 0; i < 50; i++) {
+                    createParticle(x, y);
+                }
+            }, 1000);
+
+            animate();
+        })();
+    </script>
+</body>
+</html>
